@@ -1,0 +1,31 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: incident-management
+  datasource:
+    # H2 en mémoire par défaut. Pour MySQL : profil "mysql" (voir application-mysql.yml).
+    url: ${DB_URL:jdbc:h2:mem:incidentsdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE}
+    username: ${DB_USERNAME:sa}
+    password: ${DB_PASSWORD:}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    show-sql: false
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+app:
+  jwt:
+    # Au moins 32 caractères. En dehors du développement, définir JWT_SECRET.
+    secret: ${JWT_SECRET:dev-only-secret-change-me-0123456789abcdef}
+    access-token-minutes: ${JWT_ACCESS_MINUTES:5}
+    refresh-token-days: ${JWT_REFRESH_DAYS:7}
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173}
+  seed:
+    enabled: ${SEED_ENABLED:true}
